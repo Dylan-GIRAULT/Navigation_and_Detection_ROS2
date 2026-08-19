@@ -1,0 +1,5 @@
+<launch>
+    <node name="control_display_node" pkg="screen" exec="control_display_node" output="screen" />
+    <!--<node name="map_display_node" pkg="screen" exec="map_display_node" output="screen" />-->
+    <node name="perc_int_node" pkg="screen" exec="perc_int_node" output="screen" />
+</launch>

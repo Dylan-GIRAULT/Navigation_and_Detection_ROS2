@@ -1,0 +1,5 @@
+<launch>
+    <node name="perception_interieure_gesture" pkg="perc_int" exec="perception_interieure_gesture" output="screen" />
+    <node name="perception_interieure_focus" pkg="perc_int" exec="perception_interieure_focus" output="screen" />
+    <node name="perception_interieure" pkg="perc_int" exec="perception_interieure" output="screen" />
+</launch>

@@ -1,0 +1,67 @@
+{
+    "child": {
+        "child1": {
+            "child1": {
+                "directory": "\/home\/Desktop\/sy27-zoe\/workspace",
+                "height": 871,
+                "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "5c2c706f-f889-481f-9e4c-32fcd4ce4eb0",
+                "width": 1470
+            },
+            "child2": {
+                "directory": "\/home\/Desktop\/sy27-zoe\/workspace",
+                "height": 871,
+                "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "adc9eb1a-b403-4bef-b81f-2df854933fbb",
+                "width": 449
+            },
+            "orientation": 0,
+            "position": 76,
+            "ratio": 0.765625,
+            "type": "Paned"
+        },
+        "child2": {
+            "child1": {
+                "directory": "\/home\/Desktop\/sy27-zoe\/workspace",
+                "height": 121,
+                "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "521a9f25-0c31-425b-a311-c1ffdd68396f",
+                "width": 960
+            },
+            "child2": {
+                "directory": "\/home\/Desktop\/sy27-zoe\/workspace",
+                "height": 121,
+                "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "9cc5864d-2aa0-48f9-b076-77900666fd75",
+                "width": 959
+            },
+            "orientation": 0,
+            "position": 50,
+            "ratio": 0.5,
+            "type": "Paned"
+        },
+        "orientation": 1,
+        "position": 87,
+        "ratio": 0.877139979859013041,
+        "type": "Paned"
+    },
+    "height": 993,
+    "name": "${title}",
+    "synchronizedInput": false,
+    "type": "Session",
+    "uuid": "786b30bd-6877-480a-89f4-f78bf5f34b2a",
+    "version": "1.0",
+    "width": 1920
+}

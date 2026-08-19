@@ -1,0 +1,10 @@
+/**:
+    ros__parameters:
+        gain_ecart: 0.1
+        gain_pente: 0.5
+        gain_courbure: 0.0
+        front_axle_distance: 0.0
+        delta_speed_factor: 0.5
+
+
+# launch with: ros2 param load /control_node params.yaml

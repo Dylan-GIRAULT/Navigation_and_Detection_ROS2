@@ -1,0 +1,3 @@
+<launch>
+    <node name="road_segmentation_node" pkg="perc_ext" exec="road_segmentation_node" output="screen" />
+</launch>

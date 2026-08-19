@@ -1,0 +1,9 @@
+<launch>
+    <arg name="offline" default="true"
+         description="Run controller in offline (simulation) mode" />
+
+    <node name="control_node" pkg="control" exec="control_node" output="screen">
+        <param name="offline" value="$(var offline)" />
+    </node>
+    <!-- <node if="$(var offline)" name="simulation_node" pkg="control" exec="simulation_node" output="screen"/> -->
+</launch>

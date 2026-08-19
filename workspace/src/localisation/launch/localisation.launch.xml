@@ -1,0 +1,3 @@
+<launch>
+    <node name="icp_node" pkg="localisation" exec="icp_node" output="screen"/>
+</launch>

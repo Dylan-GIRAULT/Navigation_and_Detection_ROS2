@@ -1,0 +1,66 @@
+<launch>
+	<arg name="vehicle" default="zoegrey"
+		description="Car identifier (eg zoegrey, zoeblue, zoewhite)" />
+
+	<arg name="config_path" default="$(find-pkg-share provel_base)/config"
+		description="Where to find config files (provel_base online, dataset folder offline)" />
+	<arg name="offline" default="false"
+		description="Wether to start sensors/actuators or wait for a bag" />
+	<arg name="loc_source" default="span"
+		description="span or septentrio" />
+
+	<!-- https://robotics.stackexchange.com/questions/111436/rviz2-is-not-working-in-ros2-jazzy -->
+	<set_env name="QT_QPA_PLATFORM" value="xcb" />
+
+	<set_parameter if="$(var offline)" name="use_sim_time" value="true" />
+	<set_env name="VEHICLE" value="$(var vehicle)" />
+
+	<!-- Start sensors and compute a localization -->
+
+	<include unless="$(var offline)" file="$(find-pkg-share provel_base)/launch/sensors.launch.py">
+		<arg name="sensors" value="span,vehicle,can-mabx,mako" />
+	</include>
+
+
+	<!-- SPAN localization -->
+	<group>
+        <push-ros-namespace namespace="span" />
+        <node pkg="hds_standardizer_components" exec="standardizer_span" name="standardizer">
+            <remap from="inspvax" to="/novatel/oem7/inspvax" />
+            <remap from="corrimu" to="/novatel/oem7/corrimu" />
+        </node>
+        <include file="$(find-pkg-share transform_components)/launch/geo2xyz.launch.xml">
+            <arg name="location" value="compiegne" />
+        </include>
+    </group>
+	<!-- Septentrio localization -->
+	<group>
+		<push-ros-namespace namespace="septentrio" />
+		<node pkg="hds_standardizer_components" exec="standardizer_septentrio" name="standardizer">
+			<remap from="poscovgeodetic" to="/poscovgeodetic" />
+			<remap from="velcovgeodetic" to="/velcovgeodetic" />
+			<remap from="pvtgeodetic" to="/pvtgeodetic" />
+		</node>
+	</group>
+
+	<!-- Launch all packages -->
+	<include file="$(find-pkg-share navigation)/launch/navigation.launch.xml" />
+	<include file="$(find-pkg-share control)/launch/control.launch.xml">
+		<arg name="offline" value="$(var offline)" />
+	</include>
+	<include file="$(find-pkg-share perc_int)/launch/perc_int.launch.xml"/>
+	<!-- <include file="$(find-pkg-share perc_ext)/launch/perc_ext.launch.xml"/> -->
+	<!-- <include file="$(find-pkg-share localisation)/launch/localisation.launch.xml"/> -->
+	<include file="$(find-pkg-share screen)/launch/screen.launch.xml"/>
+	<include file="$(find-pkg-share shared)/launch/shared.launch.xml"/>
+
+	<!-- Provide transformations -->
+	<include file="$(find-pkg-share zoe_state_publisher)/launch/zoe_state_publisher.launch.xml">
+		<arg name="name" value="$(var vehicle)" />
+		<arg name="topic_odom" value="/$(var loc_source)/odom" />
+	</include>
+
+	<!-- Apply the orders -->
+	<include unless="$(var offline)"
+		file="$(find-pkg-share provel_base)/launch/actuators/can-mabx-tx.launch.xml" />
+</launch>

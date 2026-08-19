@@ -1,0 +1,79 @@
+@startuml "Navigation Node Schema"
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+' Nodes
+  component "NavigationNode\n(Node)" as NAV
+
+  component "Perception Node" as PER
+  component "Localisation Node" as LOC
+  component "Manager" as MAN
+  component "Control Node" as CTRL
+  component "Screen Node" as SCR
+
+' Topics
+  interface "\n\n/perception_int_to_navigation\n(UInt32)" as T_PER
+  interface "\n/localisation_to_navigation\n(Int32MultiArray)" as T_LOC
+  interface "/stop_signal\n(UInt32)" as T_STOP
+  interface "\n\n/navigation_to_control_segment\n(UInt32)" as T_NAV
+  interface "\n\n/navigation_to_control_position\n(Float64MultiArray)" as T_NAV2
+  interface "\n/navigation_to_screen\n(Bool)" as T_SCR
+
+' Connections
+  PER --> T_PER
+  T_PER --> NAV : subscriber\nlistener_perception()
+
+  LOC --> T_LOC
+  T_LOC --> NAV : subscriber\nlistener_position()
+
+  MAN --> T_STOP
+  T_STOP --> NAV : subscriber\nlistener_manager()
+
+  NAV --> T_NAV : publisher\nsend_segment()
+  T_NAV --> CTRL
+
+  NAV --> T_NAV2 : publisher\nsend_position()
+  T_NAV2 --> CTRL
+
+  NAV --> T_SCR : publisher\nsend_decision_area()
+  T_SCR --> SCR
+
+' Notes description
+  note right of T_LOC
+    Int32MultiArray (3 éléments)
+    [0] : position X
+    [1] : position Y
+    [2] : rotation véhicule
+  end note
+
+  note right of T_PER
+    Enum Perception :
+    STOP
+    START
+    LEFT
+    RIGHT
+    NO_HAND
+  end note
+
+  note right of T_NAV
+    Enum Segment :
+    ROND_POINT_BAS
+    ROND_POINT_HAUT
+    LIGNE_DROITE
+    NO_SEGMENT
+  end note
+
+  note right of T_NAV2
+    Pose2D:
+    x : position X
+    y : position Y
+    theta : rotation véhicule
+  end note
+
+  note left of T_SCR
+    Bool :
+    True if in decision area
+    False else
+  end note
+
+@enduml

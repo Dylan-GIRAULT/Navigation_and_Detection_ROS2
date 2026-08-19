@@ -1,0 +1,10 @@
+<launch>
+	<group>
+	<push-ros-namespace namespace="/webcam/webcam_genius/" />
+	<arg name="config_path" default="$(find-pkg-share manager)/config" />
+	<node name="webcam_onboard_usb_node" pkg="usb_cam" exec="usb_cam_node_exe">
+		<param from="$(var config_path)/webcam_genius.yaml" />
+        <param name="params-file" value="$(var config_path)/node/webcam_genius.yaml"/>
+        </node>
+	</group>
+</launch>
